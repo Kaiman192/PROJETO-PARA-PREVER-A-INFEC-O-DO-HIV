@@ -1,0 +1,93 @@
+# Importando as bibliotecas necessárias
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_auc_score
+
+# 1. Criando um DataFrame fictício
+np.random.seed(42)
+
+# Simulando um dataset com variáveis categóricas e numéricas
+data = {
+    'tempo_para_falha': np.random.randint(1, 1000, 500),
+    'indicador_tratamento': np.random.choice([0, 1], 500),
+    'idade': np.random.randint(18, 80, 500),
+    'peso': np.random.randint(50, 100, 500),
+    'hemofilia': np.random.choice([0, 1], 500),
+    'atividade_homossexual': np.random.choice([0, 1], 500),
+    'uso_drogas_intravenosas': np.random.choice([0, 1], 500),
+    'pontuacao_karnofsky': np.random.randint(50, 100, 500),
+    'terapia_antirretroviral': np.random.choice([0, 1], 500),
+    'contagem_cd4': np.random.randint(200, 1200, 500),
+    'contagem_cd8': np.random.randint(300, 2000, 500),
+    'raca': np.random.choice(['Branco', 'Negro', 'Asiático', 'Hispânico'], 500),
+    'genero': np.random.choice(['Masculino', 'Feminino'], 500),
+    'infectado': np.random.choice([0, 1], 500)  # Variável alvo
+}
+
+# Criando o DataFrame
+df = pd.DataFrame(data)
+
+# 2. Análise Exploratória dos Dados (EDA)
+print(df.info())  # Informações gerais sobre os dados
+print(df.describe())  # Estatísticas descritivas
+
+# Visualizando a distribuição das variáveis numéricas
+df.hist(bins=30, figsize=(20, 15))
+plt.show()
+
+# Visualizando a correlação entre as variáveis
+plt.figure(figsize=(10, 8))
+sns.heatmap(df.corr(), annot=True, cmap='coolwarm')
+plt.title('Matriz de Correlação')
+plt.show()
+
+# 3. Pré-processamento dos Dados
+# Convertendo variáveis categóricas para numéricas (raca e genero)
+df = pd.get_dummies(df, drop_first=True)
+
+# Verificando novamente valores ausentes após transformação
+print(df.isnull().sum())
+
+# Separando os dados em features (X) e target (y)
+X = df.drop('infectado', axis=1)  # 'infectado' é a variável alvo
+y = df['infectado']
+
+# Dividindo os dados em treino e teste
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Padronizando os dados
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# 4. Construção do Modelo de Machine Learning
+# Utilizando um modelo de Random Forest como exemplo
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# 5. Avaliação do Desempenho do Modelo
+y_pred = model.predict(X_test)
+
+# Acurácia
+accuracy = accuracy_score(y_test, y_pred)
+print(f'Acurácia: {accuracy:.4f}')
+
+# Matriz de Confusão
+cm = confusion_matrix(y_test, y_pred)
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+plt.title('Matriz de Confusão')
+plt.show()
+
+# Relatório de Classificação
+print(classification_report(y_test, y_pred))
+
+# Área sob a curva ROC
+roc_auc = roc_auc_score(y_test, model.predict_proba(X_test)[:, 1])
+print(f'ROC AUC Score: {roc_auc:.4f}')
+
+
