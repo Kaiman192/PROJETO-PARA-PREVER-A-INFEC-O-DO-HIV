@@ -1,0 +1,51 @@
+README.md
+# Análise de Dados Fictícios para Previsão de Infecção
+
+Este projeto realiza a análise de dados fictícios de saúde, focando em variáveis relacionadas ao risco de infecção e utilizando um modelo de Random Forest para prever a variável alvo `infectado`.
+
+## Estrutura do Projeto
+
+- **data/**: Diretório para armazenamento dos dados (fictícios ou reais).
+- **notebooks/**: Notebooks Jupyter para análises e visualizações.
+- **src/**: Scripts de código-fonte para preprocessamento de dados, treinamento de modelos e visualizações.
+
+## Requisitos
+
+Para rodar este projeto, você precisará das seguintes bibliotecas Python:
+
+- `pandas`
+- `numpy`
+- `matplotlib`
+- `seaborn`
+- `scikit-learn`
+Execução
+Clone o repositório:
+git clone https://github.com/usuario/projeto-previsao-infeccao.git
+Acesse o diretório do projeto:
+cd projeto-previsao-infeccao
+Execute o notebook notebooks/analise_previsao_infeccao.ipynb para visualizar as análises e resultados.
+Instale os pacotes necessários usando o seguinte comando:
+
+```bash
+pip install -r requirements.txt
+
+Descrição dos Dados
+tempo_para_falha: Intervalo de tempo antes da falha (valores entre 1 e 1000).
+indicador_tratamento: Indicador binário de tratamento (0 ou 1).
+idade: Idade dos pacientes (valores entre 18 e 80).
+peso: Peso dos pacientes (valores entre 50 e 100 kg).
+hemofilia: Indicador de hemofilia (0 ou 1).
+atividade_homossexual: Indicador de atividade homossexual (0 ou 1).
+uso_drogas_intravenosas: Indicador de uso de drogas intravenosas (0 ou 1).
+pontuacao_karnofsky: Pontuação de Karnofsky (valores entre 50 e 100).
+terapia_antirretroviral: Indicador de terapia antirretroviral (0 ou 1).
+contagem_cd4: Contagem de células CD4 (valores entre 200 e 1200).
+contagem_cd8: Contagem de células CD8 (valores entre 300 e 2000).
+raca: Raça do paciente (Branco, Negro, Asiático, Hispânico).
+genero: Gênero do paciente (Masculino, Feminino).
+infectado: Indicador de infecção (variável alvo, 0 ou 1).
+Resultados
+Acurácia do Modelo: O modelo de Random Forest alcançou uma acurácia de aproximadamente X.XXX.
+ROC AUC: O score da Área Sob a Curva ROC foi de aproximadamente X.XXX.
+Contribuição
+Sinta-se à vontade para abrir issues ou fazer pull requests para melhorias ou sugestões.
